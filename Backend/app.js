@@ -6,9 +6,12 @@ import { dbConnection } from "./database/dbConnection.js";
 import {errorMiddleware} from "./error/error.js";
 import reservationRouter from "./routes/reservationRoutes.js";
 
-const app=express()
+// Load environment variables from .env file
 dotenv.config({path:"./config/config.env"});
 
+
+
+const app=express()
 
 // frontend to backend connection using middleware
 app.use(cors({
@@ -21,10 +24,16 @@ app.use(cors({
 //store the object in json format.
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+// It is used for route(Use the reservation routes)
 app.use('/api/v1/reservation',reservationRouter);
+
 // connection database with server
 dbConnection();
+
+// Error handling middleware
 app.use(errorMiddleware);
+
 
 export default app;
 
